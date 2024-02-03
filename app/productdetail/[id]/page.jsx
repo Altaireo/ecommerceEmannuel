@@ -1,175 +1,214 @@
+// Importing necessary modules and components
 'use client';
 import { useState, useEffect } from "react";
 import { Typography, Button } from "@material-tailwind/react";
 
+// Imported utility functions and components
 import { addToCart } from '@utils/idb';
 import { toast } from 'sonner';
 import { useAppContext } from '@utils/appProvider';
 import AccordionTemp from "@components/AccordionTemp";
+
+// Functional component Product
 const Product = ({ params }) => {
-  const { cartItemCount, add2Cart} = useAppContext();
-  const sizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
-  const colors = ['red', 'blue', 'green', 'yellow'];
-  const [selectedSize, setSelectedSize] = useState('');
-  const [selectedColor, setSelectedColor] = useState('');
-  const [productData, setProductData] = useState();
+  // Using custom hook to access global state and functions
+  const { cartItemCount, add2Cart } = useAppContext();
+
+  // Define product sizes and colors
+  const sizes = ['S', 'M', 'L', 'XL'];
+  const colors = ['Maroon-Red', 'Navy Blue', 'Black', 'Lemon Green'];
+
+  // State variables
+  const [userSize, setSelectedSize] = useState('');
+  const [userColour, setSelectedColor] = useState('');
+  const [productDetails, setProductData] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const [discountedPrice, setDiscountedPrice] = useState(true);
   const [activeImage, setActiveImage] = useState(null);
   const [quantity, setQuantity] = useState(1);
 
+  // Function to fetch product data
   const getProduct = async () => {
     try {
-      const response = await fetch(`/api/product/${params.id}`)
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
+      const response = await fetch(`/api/product/${params.id}`);
+      if (response.ok === false) {
+        throw new Error('Network response is not working');
       }
       const data = await response.json();
-      console.log("🚀 ~ file: page.jsx:13 ~ getProduct ~ data:", data)
+      console.log("Getting Data", data);
+      // Set product data and initial image
       setProductData(data);
-      setActiveImage(data.images[0])
+      setActiveImage(data.images[0]);
       setIsLoading(false);
-      const math =
+      // Calculate discounted price if available
+      const Discounted =
         data.discount > 0 ?
-            (data.price - (data.price * data.discount / 100)).toFixed(2) :
-            null;
-            setDiscountedPrice(math)
+          (data.price - (data.price * data.discount / 100)).toFixed(2) :
+          null;
+      setDiscountedPrice(Discounted);
     } catch (error) {
-      console.error('Fetch Error: ', error);
+      console.error('Unable to fetch (Error): ', error);
     }
-  }
-  const handleAdd2Cart = () => {
-    add2Cart(1); 
-};
-const handleAddToCart = async () => {
+  };
+
+  // Function to handle adding product to cart
+  const handleAddToCart = async () => {
     try {
-        await addToCart(productData);
-        toast.success("Added itme to cart!");
-        handleAdd2Cart();
-        console.log('cart item count:c', cartItemCount);
+      // Add product to cart using IndexedDB
+      await addToCart(productDetails);
+      // Show success toast
+      toast.success("Added item to cart!");
+      // Increment cart item count
+      handleAdd2Cart();
+      console.log('cart item count: ', cartItemCount);
     } catch (error) {
-        console.error('Error adding item to cart:', error);
-        toast.error('Product already in cart!', { background: 'pink' },);
+      console.error('Error adding item to cart:', error);
+      // Show error toast if product is already in cart
+      toast.error('Product already in cart!', { background: 'pink' });
     }
-};
+  };
+
+  // Fetch product data on component mount
   useEffect(() => {
     getProduct();
-  }, [])
+  }, []);
+
+  // Update product data when selected size or color changes
   useEffect(() => {
     setProductData(prevState => ({
       ...prevState,
-      selectedSize,
-      selectedColor,
-  }))
-  }, [selectedSize, selectedColor])
+      userSize,
+      userColour,
+    }));
+  }, [userSize, userColour]);
+
+  // Render product details and UI elements
   return (
     <div className="flex flex-col md:flex-row m-8">
-      {isLoading ? <div>Loading...</div> :
-        <><div className="flex flex-col-reverse md:flex-col md:w-1/2">
-         <div className="h-[70%] flex items-center justify-center overflow-hidden rounded-xl">
-    <img
-        src={activeImage || productData.image}
-        alt="Large product"
-        className="w-full object-cover transform transition-transform duration-500 hover:scale-90"
-    />
-</div>
+      {isLoading ? <div>Loading</div> :
+        <>
+          <div className="flex flex-col-reverse md:flex-col md:w-1/2">
+            {/* Main product image */}
+            <div className="h-[40%] flex items-center justify-center overflow-hidden rounded-xl">
+              <img
+                src={activeImage || productDetails.image}
+                alt="Large product"
+                className="w-full object-cover transform transition-transform duration-500 hover:scale-90"
+              />
+            </div>
 
-
-          <div className="flex space-x-2 mt-2 rounded-xl">
-            {productData.images.map((img, idx) => (
-              <div
-                key={idx}
-                className="relative w-16 h-16 cursor-pointer rounded-xl overflow-hidden"
-                onClick={() => setActiveImage(img)}
-              >
-                <img
-                  src={img}
-                  alt={`Thumbnail ${idx}`}
-                  className="w-full h-full object-cover"
-                />
-                {activeImage === img && (
-                  <div className="absolute inset-0 bg-black opacity-20 ring-2 ring-black"></div>
-                )}
-              </div>
-            ))}
+            {/* Product image thumbnails */}
+            <div className="flex space-x-2 mt-2 rounded-xl">
+              {productDetails.images.map((img, idx) => (
+                <div
+                  key={idx}
+                  className="relative w-16 h-16 cursor-pointer rounded-xl overflow-hidden"
+                  onClick={() => setActiveImage(img)}
+                >
+                  <img
+                    src={img}
+                    alt={`Thumbnail ${idx}`}
+                    className="w-full h-full object-cover"
+                  />
+                  {activeImage === img && (
+                    <div className="absolute inset-0 bg-gray opacity-100 ring-2 ring-black"></div>
+                  )}
+                </div>
+              ))}
+            </div>
           </div>
 
-        </div><div className="md:w-1/2 p-4">
-            <h1 className="text-xl md:text-3xl mb-2">{productData.name}</h1>
-            <p className="text-sm md:text-base mb-2">★★★★☆ (40 reviews)</p>
-            <Typography color="gray" className="mb-4 font-normal">
-                    {productData.desc}
+          {/* Product details and controls */}
+          <div className="md:w-1/2 p-4">
+            <h1 className="text-xl md:text-3xl mb-2">{productDetails.name}</h1>
+            <p className="text-sm md:text-base mb-2">★★★★★ (100 reviews)</p>
+            <Typography color="black" className="mb-4 font-normal custom-font-class">
+              {productDetails.desc}
+            </Typography>
+
+            {/* Display price and discount if available */}
+            <div className="flex">
+              {productDetails.discount ? (
+                <>
+                  <Typography variant="h5" color="red" className="font-roboto font-semi-bold text-lg mr-2 mb-4">
+                    ${discountedPrice}
+                  </Typography>
+                  <Typography variant="h5" color="red" className="font-roboto font-bold line-through mb-4">
+                    ${productDetails.price}
+                  </Typography>
+
+                </>
+              ) : (
+                <Typography variant="h5" color="green" className="font-roboto font-bold mb-4">
+                  ${productDetails.price}
                 </Typography>
-                {/* <RatingStars /> */}
-                <div className="flex">
-                    {productData.discount ? (
-                        <><Typography variant="h6" color="blue-gray" className="font-lg text-lg mr-2 mb-4">
-                            ${discountedPrice}
-                        </Typography><Typography variant="h6" color="blue-gray" className="font-medium line-through mb-4">
-                                ${productData.price}
-                            </Typography></>
-                    ) : (<Typography variant="h6" color="blue-gray" className="font-medium mb-4">
-                        ${productData.price}
-                    </Typography>)}
-                </div>
+              )}
+            </div>
 
-                {/* Size Selector */}
-                <div className=" mb-4">
-                    {sizes.map((size, index) => (
-                        <Button
-                            key={index}
-                            className={selectedSize === size ? "lightBlue m-1 px-4 py-1" : "ring-black ring-1 text-black bg-transparent m-1 px-4 py-1 shadow-none"}
-                            onClick={() => setSelectedSize(size)}
-                        >
-                            {size}
-                        </Button>
-                    ))}
-                </div>
+            {/* Size Selector */}
+            <div className="mb-3">
+              {sizes.map((selectedSize, index) => (
+                <Button
+                  key={index}
+                  className={userSize === selectedSize ? "bg-red-700 text-white m-1 px-4 py-1 rounded-lg" : "bg-transparent text-black border border-black m-1 px-4 py-1 rounded-lg"}
+                  onClick={() => setSelectedSize(selectedSize)}
+                >
+                  {selectedSize}
+                </Button>
+              ))}
+            </div>
 
-                {/* Color Selector */}
-                <div className=" mb-4">
-                    {colors.map((color, index) => (
-                        <Button
-                            key={index}
-                            className={selectedColor === color ? "light-blue m-1 px-4 py-1" : "ring-black ring-1 text-black bg-transparent m-1 px-4 py-1 shadow-none"}
-                            onClick={() => setSelectedColor(color)}
-                        >
-                            {color}
-                        </Button>
-                    ))}
-                </div>
+            {/* Color Selector */}
+            <div className=" mb-3">
+              {colors.map((selectedColour, index) => (
+                <Button
+                  key={index}
+                  className={userColour === selectedColour ? "bg-red-700 text-white m-1 px-4 py-1 rounded-lg" : "bg-transparent text-black border border-black m-1 px-4 py-1 rounded-lg"}
+                  onClick={() => setSelectedColor(selectedColour)}
+                >
+                  {selectedColour}
+                </Button>
+              ))}
+            </div>
 
+            {/* Quantity controls and Add to Cart button */}
             <div className="flex items-center mt-auto">
-                    <Button
+              <Button
+                onClick={() => setQuantity(q => Math.max(q - 1, 1))}
+                className="m-1 bg-blue-300 text-gray shadow-none text-lg"
+              >
+                -
+              </Button>
+              <Typography color="black" className="mx-4">
+                {quantity}
+              </Typography>
+              <Button
+                color="gray"
+                onClick={() => setQuantity(q => q + 1)}
+                className="m-1 bg-blue-300 text-white shadow-none text-lg"
+              >
+                +
+              </Button>
+              <Button
+                color="red" // Change color to red for a more prominent appearance
+                className="m-4 bg-black hover:bg-green-600 text-white font-semibold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-opacity-75" // Add Tailwind CSS classes for styling
+                ripple="dark" // Change ripple effect to dark for a subtle effect
+                onClick={() => { handleAddToCart() }}
+                disabled={!userColour || !userSize}
+                fullWidth
+              >
+                Add to my Cart
+              </Button>
 
-                        onClick={() => setQuantity(q => Math.max(q - 1, 1))}
-                        className="m-1 bg-transparent text-black shadow-none text-lg"
-                    >
-                        -
-                    </Button>
-                    <Typography color="gray" className="mx-4">
-                        {quantity}
-                    </Typography>
-                    <Button
-                        color="gray"
-                        onClick={() => setQuantity(q => q + 1)}
-                        className="m-1 bg-transparent text-black shadow-none text-lg"
-                    >
-                        +
-                    </Button>
-                    <Button color="blue-gray" className="m-1" ripple="dark"
-                        onClick={() => { handleAddToCart() }}
-                        disabled={!selectedColor || !selectedSize}
-                        fullWidth
-                    >
-                        Add to Cart
-                    </Button>
-                </div>
-                <AccordionTemp />
-          </div></>
+            </div>
+
+            {/* Accordion component */}
+            <AccordionTemp />
+          </div>
+        </>
       }
     </div>
-  )
-}
+  );
+};
 
-export default Product
+export default Product;

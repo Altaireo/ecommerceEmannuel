@@ -6,10 +6,10 @@ import {
 } from "@material-tailwind/react";
 const StarRating = ({ rating }) => {
   const filledStars = [...Array(rating)].map((_, i) => (
-    <span key={i} className="text-yellow-500">★</span>
+    <span key={i} className="text-green-700">★</span>
   ));
   const emptyStars = [...Array(5 - rating)].map((_, i) => (
-    <span key={i} className="text-gray-300">★</span>
+    <span key={i} className="text-gray-500">★</span>
   ));
 
   return (
@@ -19,24 +19,23 @@ const StarRating = ({ rating }) => {
     </div>
   );
 };
-const Review = ({ name, subject, rating, description }) => (
+const Review = ({ reviewName, reviewSubject, rating, reviewDesc }) => (
   <div className="my-2 border-b border-gray-200 pb-2">
     <div className="flex justify-between items-center">
-      <h4 className="font-bold">{name}</h4>
+      <h4 className="font-bold">{reviewName}</h4>
       <StarRating rating={rating} />
     </div>
-    <h5 className="text-lg mt-1">{subject}</h5>
-    <p className="text-gray-600">{description}</p>
+    <h5 className="text-lg mt-1">{reviewSubject}</h5>
+    <p className="text-gray-600">{reviewDesc}</p>
   </div>
 );
 function Icon({ id, open }) {
   return (
     <svg
-      xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"
-      strokeWidth={2}
-      stroke="currentColor"
+      strokeWidth={5}
+      stroke="purple"
       className={`${id === open ? "rotate-180" : ""} h-5 w-5 transition-transform`}
     >
       <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
@@ -46,18 +45,29 @@ function Icon({ id, open }) {
 const AccordionTemp = () => {
   const reviews = [
     {
-      name: "John Doe",
-      subject: "Great Product!",
+      reviewName: "Emmanuel Chang",
+      reviewSubject: "Worth every single cent!",
       rating: 4,
-      description: "I've been using this product for a while and it's really amazing. Highly recommend it."
+      reviewDesc: "This product is simply amazing. Wearing this makes me feel so confident!"
     },
     {
-      name: "John Doe",
-      subject: "Great Product!",
+      reviewName: "Araki Yeo",
+      reviewSubject: "Best purchase ever",
       rating: 4,
-      description: "I've been using this product for a while and it's really amazing. Highly recommend it."
+      reviewDesc: "This product is super durable. Highly recommend it."
     },
-    // ... (add more reviews as needed)
+    {
+      reviewName: "Kishor",
+      reviewSubject: "Amazing product!",
+      rating: 4,
+      reviewDesc: "Buy it while stocks last!!!"
+    },
+    {
+      reviewName: "Benjamin",
+      reviewSubject: "Unbelievably cheap",
+      rating: 4,
+      reviewDesc: "Cheap product for its price!!!"
+    },
   ];
   const [open, setOpen] = React.useState(0);
 
@@ -66,17 +76,17 @@ const AccordionTemp = () => {
   return (
     <>
       <Accordion open={open === 1} icon={<Icon id={1} open={open} />}>
-        <AccordionHeader onClick={() => handleOpen(1)}>Can I get a size chart for the "Summer Breeze Maxi Dress"?</AccordionHeader>
+        <AccordionHeader onClick={() => handleOpen(1)}>Can I have a size chart for this product?"?</AccordionHeader>
         <AccordionBody>
-          Absolutely! Our "Summer Breeze Maxi Dress" follows standard sizing. You can find the detailed size chart linked just below the product description. Please measure yourself and refer to the chart to ensure the perfect fit. If you have any issues or further questions, feel free to reach out to our customer support.
+          Certainly! The comprehensive size chart is available for your reference below the product description. We recommend measuring yourself and consulting the chart to guarantee an ideal fit. Should you encounter any concerns or require additional assistance, don't hesitate to contact our customer support team.
         </AccordionBody>
       </Accordion>
       <Accordion open={open === 2} icon={<Icon id={2} open={open} />}>
         <AccordionHeader onClick={() => handleOpen(2)}>
-          Is the "Classic Denim Jacket" true to its color in the pictures?
+          Is product true to its pictures?
         </AccordionHeader>
         <AccordionBody>
-          Great question! We strive to display the most accurate color representation in our product photos. However, please note that the actual color might slightly vary due to monitor settings and lighting conditions when the photo was taken. If you're not satisfied with the color upon receiving the jacket, our return policy makes it easy for you to send it back.
+          Certainly! Your question is excellent! We aim to present our product photos with the utmost precision regarding color representation. It's important to acknowledge that slight variations in the actual color may occur due to monitor settings and lighting conditions at the time the photo was captured. Should you find the color of the jacket unsatisfactory upon receipt, our return policy ensures a hassle-free process for returning it.
         </AccordionBody>
       </Accordion>
       <Accordion open={open === 3} icon={<Icon id={3} open={open} />}>

@@ -102,7 +102,7 @@ const Product = ({ params }) => {
         <>
           <div className="flex flex-col-reverse md:flex-col md:w-1/2">
             {/* Main product image */}
-            <div className="h-[40%] flex items-center justify-center overflow-hidden rounded-xl">
+            <div className="h-[70%] flex items-center justify-center overflow-hidden rounded-xl">
               <img
                 src={activeImage || productDetails.image}
                 alt="Large product"
@@ -115,7 +115,7 @@ const Product = ({ params }) => {
               {productDetails.images.map((img, idx) => (
                 <div
                   key={idx}
-                  className="relative w-16 h-16 cursor-pointer rounded-xl overflow-hidden"
+                  className="relative w-14 h-14 cursor-pointer rounded-xl overflow-hidden"
                   onClick={() => setActiveImage(img)}
                 >
                   <img

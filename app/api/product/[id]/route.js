@@ -1,4 +1,6 @@
+// Emmanuel Chang
 // This page is needed for productdetail\[id]/page.jsx
+
 import Product from "@models/product"; // Importing the Product model
 import { connectToDB } from "@utils/database"; // Importing the connectToDB function
 

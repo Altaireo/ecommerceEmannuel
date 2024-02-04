@@ -4,18 +4,18 @@ import {
   AccordionHeader,
   AccordionBody,
 } from "@material-tailwind/react";
-const StarRating = ({ rating }) => {
-  const filledStars = [...Array(rating)].map((_, i) => (
+const Rating = ({ rating }) => {
+  const greenStars = [...Array(rating)].map((_, i) => (
     <span key={i} className="text-green-700">★</span>
   ));
-  const emptyStars = [...Array(5 - rating)].map((_, i) => (
+  const grayStars = [...Array(5 - rating)].map((_, i) => (
     <span key={i} className="text-gray-500">★</span>
   ));
 
   return (
     <div className="flex">
-      {filledStars}
-      {emptyStars}
+      {greenStars}
+      {grayStars}
     </div>
   );
 };
@@ -23,7 +23,7 @@ const Review = ({ reviewName, reviewSubject, rating, reviewDesc }) => (
   <div className="my-2 border-b border-gray-200 pb-2">
     <div className="flex justify-between items-center">
       <h4 className="font-bold">{reviewName}</h4>
-      <StarRating rating={rating} />
+      <Rating rating={rating} />
     </div>
     <h5 className="text-lg mt-1">{reviewSubject}</h5>
     <p className="text-gray-600">{reviewDesc}</p>
@@ -42,7 +42,7 @@ function Icon({ id, open }) {
     </svg>
   );
 }
-const AccordionTemp = () => {
+const Temp = () => {
   const reviews = [
     {
       reviewName: "Emmanuel Chang",
@@ -103,4 +103,4 @@ const AccordionTemp = () => {
   );
 }
 
-export default AccordionTemp
+export default Temp

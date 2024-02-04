@@ -4,7 +4,7 @@ import Nav from '@components/Nav';
 import Provider from '@components/Provider';
 import { AppProvider } from '@utils/appProvider';
 export const metadata = {
-    title: "Ecommerce",
+    title: "Our online shop",
     description: "Shop Now"
 }
 

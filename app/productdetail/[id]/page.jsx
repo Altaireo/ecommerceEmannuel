@@ -28,18 +28,28 @@ const Product = ({ params }) => {
   const [quantity, setQuantity] = useState(1);
 
   // Function to fetch product data
+  // Function to fetch product data
   const getProduct = async () => {
     try {
+      // Send a request to fetch product data by its ID
       const response = await fetch(`/api/product/${params.id}`);
+
+      // Check if the response is not okay
       if (response.ok === false) {
         throw new Error('Network response is not working');
       }
+
+      // Parse response data as JSON
       const data = await response.json();
+
+      // Log the fetched data
       console.log("Getting Data", data);
+
       // Set product data and initial image
       setProductData(data);
       setActiveImage(data.images[0]);
       setIsLoading(false);
+
       // Calculate discounted price if available
       const Discounted =
         data.discount > 0 ?
@@ -47,9 +57,11 @@ const Product = ({ params }) => {
           null;
       setDiscountedPrice(Discounted);
     } catch (error) {
+      // Log error if fetching data fails
       console.error('Unable to fetch (Error): ', error);
     }
   };
+
 
   // Function to handle adding product to cart
   const handleAddToCart = async () => {
@@ -122,7 +134,7 @@ const Product = ({ params }) => {
           <div className="md:w-1/2 p-4">
             <h1 className="text-xl md:text-3xl mb-2">{productDetails.name}</h1>
             <p className="text-sm md:text-base mb-2">★★★★★ (100 reviews)</p>
-            <Typography color="black" className="mb-4 font-normal custom-font-class">
+            <Typography color="pink" className="mb-4 font-normal custom-font-class">
               {productDetails.desc}
             </Typography>
 

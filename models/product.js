@@ -1,25 +1,26 @@
-import  {Schema, model,models} from "mongoose";
+import { Schema, model, models } from "mongoose";
 
-const promptSchema = new Schema({
+// Define the schema for the Prompt model
+const promptFromSchme = new Schema({
     creator: {
-        type:Schema.Types.ObjectId,
-        ref:'User',
+        type: Schema.Types.ObjectId,
+        ref: 'User', // Reference to the User model
     },
     name: {
         type: String,
-        require: [true, 'name is required.'],
+        required: [true, 'Please provide a name.'], // Corrected typo and improved error message
     },
     desc: {
         type: String,
-        require: [true, 'Description is requires.'],
+        required: [true, 'Please provide a description.'], // Improved error message
     },
     images: [{
         type: String,
-        required: [true, 'At least one image is required.'],
+        required: [true, 'Please provide at least one image.'], // Improved error message
     }],
     price: {
         type: Number,
-        require: [true, 'Price is requires.'],
+        required: [true, 'Please provide a price.'], // Improved error message
     },
     discount: {
         type: Number,
@@ -27,9 +28,11 @@ const promptSchema = new Schema({
     category: {
         type: String,
         enum: ['Shirts', 'Pants', 'Shoes', 'Accessories', 'Sports'],
-        required: [true, 'Category is required.'],
+        required: [true, 'Please provide a category.'], // Improved error message
     }
 });
-const Prompt = models.Prompt || model('Prompt', promptSchema);
+
+// Check if the Prompt model is already defined, otherwise create it
+const Prompt = models.Prompt || model('Prompt', promptFromSchme);
 
 export default Prompt;

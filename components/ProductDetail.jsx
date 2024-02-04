@@ -15,18 +15,18 @@ import { useAppContext } from '@utils/appProvider';
 import { useSession } from "next-auth/react";
 
 import Link from 'next/link';
-const ProductDetail = (promps) => {
+const FirstProductDetailPage = (temp) => {
     const { cartItemCount, add2Cart } = useAppContext();
     const { data: session } = useSession();
     const sizes = ['S', 'M', 'L', 'XL',];
     const colors = ['Maroon Red', 'Navy Blue', 'Black', 'Lemon Green'];
-    const { category, desc, image, name, price, _id, images } = promps.product
+    const { category, desc, image, name, price, _id, images } = temp.product
     const [quantity, setQuantity] = useState(1);
     const [selectedSize, setSelectedSize] = useState('');
     const [selectedColor, setSelectedColor] = useState('');
-    const discountedPrice = promps.discountedPrice;
+    const discountedPrice = temp.discountedPrice;
     const handleButton = () => {
-        promps.handleOpen(false);
+        temp.handleOpen(false);
     }
     const handleAdd2Cart = () => {
         add2Cart(1);
@@ -83,14 +83,14 @@ const ProductDetail = (promps) => {
                 <Typography variant="h5" color="pink" className="mb-3 uppercase">
                     {name}
                 </Typography>
-                <Typography color="brown" className="font-roboto font-semi-bold mb-4">
+                <Typography color="pink" className="font-roboto font-semi-bold mb-4">
                     {desc}
                 </Typography>
                 <RatingStars />
                 <div className="flex">
-                    {promps.discountedPrice ? (
+                    {temp.discountedPrice ? (
                         <><Typography variant="h5" color="red" className="font-roboto font-semi-bold text-lg mr-2 mb-4">
-                            ${promps.discountedPrice || price}
+                            ${temp.discountedPrice || price}
                         </Typography><Typography variant="h5" color="red" className="font-roboto font-bold line-through mb-4">
                                 ${price}
                             </Typography></>
@@ -156,7 +156,7 @@ const ProductDetail = (promps) => {
                     </Button>
                 </div>
                 <Link href={`/productdetail/${_id}`}>
-                    <Button fullWidth>View product detail</Button>
+                    <Button fullWidth>Click here for product details!</Button>
                 </Link>
 
             </CardBody>
@@ -165,4 +165,4 @@ const ProductDetail = (promps) => {
     )
 }
 
-export default ProductDetail
+export default FirstProductDetailPage

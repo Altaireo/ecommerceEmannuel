@@ -58,7 +58,7 @@ const Temp = () => {
     },
     {
       reviewName: "Kishor",
-      reviewSubject: "Amazing product!",
+      reviewSubject: "Vely nice!",
       rating: 4,
       reviewDesc: "Buy it while stocks last!!!"
     },

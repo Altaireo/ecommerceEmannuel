@@ -14,7 +14,7 @@ const Layout = ({ children }) => {
         console.log(status === "unauthenticated");            
         if (status === 'unauthenticated' || (status === 'authenticated' && session.user.role !== "admin")) {
             router.push('/?message=notAdmin'); 
-            toast('DONT DO THAT!, You are not Adim');
+            toast('DONT DO THAT!, You are not Admin');
         } 
     }, [session, status]);
     if (status === 'loading') {

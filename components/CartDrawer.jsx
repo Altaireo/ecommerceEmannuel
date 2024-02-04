@@ -1,3 +1,4 @@
+/*kishor*/
 import React, { useEffect } from "react";
 import { Drawer, IconButton } from "@material-tailwind/react";
 import CartCard from "@components/CartCard";
@@ -21,11 +22,11 @@ export default function DrawerDefault({ closeDrawerRight, openRight }) {
         placement="right"
         open={openRight}
         onClose={closeDrawerRight}
-        className={openRight ? 'p-4 rounded-xl w-11/12 mx-4' : 'p-4 rounded-xl'}
+        className={`p-4 rounded-xl ${openRight ? 'bg-red-50 border border-red-200' : ''}`}
         size={450}
       >
-        <div className=" flex items-center justify-between mb-3">
-          <h1 className='text-2xl tracking-wider font-medium'> Shopping cart</h1>
+        <div className="flex items-center justify-between mb-3">
+          <h1 className='text-2xl tracking-wider font-medium text-red-700'>Shopping Cart</h1>
           <IconButton
             variant="text"
             color="blue-gray"
@@ -37,7 +38,7 @@ export default function DrawerDefault({ closeDrawerRight, openRight }) {
               viewBox="0 0 24 24"
               strokeWidth={2}
               stroke="currentColor"
-              className="h-5 w-5"
+              className="h-5 w-5 text-red-700"
             >
               <path
                 strokeLinecap="round"
@@ -47,10 +48,9 @@ export default function DrawerDefault({ closeDrawerRight, openRight }) {
             </svg>
           </IconButton>
         </div>
+        {/* */}
         <CartCard />
-
       </Drawer>
     </React.Fragment>
-
   );
 }

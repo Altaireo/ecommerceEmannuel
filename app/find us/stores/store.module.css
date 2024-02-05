@@ -1,0 +1,34 @@
+/* store.module.css */
+
+.store-container {
+    /* Add styling for the store container if needed */
+}
+
+.store-item {
+    display: flex; /* Use flexbox for better alignment */
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+/* Style for the store image */
+.store-image {
+    width: 80px; /* Set the desired width for the image */
+    height: auto; /* Maintain the aspect ratio */
+    margin-right: 10px; /* Add some margin to separate the image from text */
+}
+
+.store-details {
+    flex-grow: 1; /* Allow the details to take remaining space */
+}
+
+/* Style for the closing time */
+.closing-time {
+    font-style: italic;
+}
+
+/* Style for the scrollable area */
+.scrollable-area {
+    max-height: 300px;
+    overflow-y: auto;
+}

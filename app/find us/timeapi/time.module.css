@@ -1,0 +1,17 @@
+/* Styles for the element with class "fixedTopLeft" */
+.fixedTopLeft {
+    position: fixed; /* Fixes the position of the element relative to the viewport */
+    top: 60px; /* Sets the distance from the top of the viewport to 60 pixels */
+    right: 0; /* Sets the distance from the right of the viewport to 0 pixels */
+    z-index: 999; /* Specifies the stacking order of the element (how it should be layered with other elements) */
+    padding: 10px; /* Adds padding inside the element for spacing */
+    background-color: #000; /* Sets the background color to black */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Adds a subtle box shadow for a sense of depth */
+    border: 2px solid #fff; /* Adds a white border around the element */
+    border-radius: 5px; /* Rounds the corners of the element */
+    color: #fff; /* Sets the text color to white */
+    font-family: 'Courier New', monospace; /* Specifies the font family for the text */
+    font-size: 18px; /* Sets the font size to 18 pixels */
+    letter-spacing: 1px; /* Adds slight spacing between letters */
+    line-height: 1.2; /* Sets the height of each line of text to 1.2 times the font size for better vertical alignment */
+}

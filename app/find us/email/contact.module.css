@@ -1,0 +1,44 @@
+/* Styles for the banner element */
+.banner {
+  position: relative; /* Change to relative position */
+  width: 100%; /* Full width */
+  background-color: #f8f8f8; /* Light background color */
+  border-top: 2px solid #ddd; /* Add a 2px solid light border at the top */
+  padding: 20px; /* Add 20px padding inside the banner */
+  box-sizing: border-box; /* Include padding and border in the element's total width and height */
+  text-align: center; /* Center-align text within the banner */
+}
+
+/* Styles for elements inside the banner with class "inner-container" */
+.inner-container {
+  display: flex; /* Use flexbox layout */
+  align-items: center; /* Center items vertically within the inner container */
+  justify-content: center; /* Center items horizontally within the inner container */
+  margin-top: 20px; /* Add 20px margin at the top of the inner container */
+}
+
+/* Styles for input elements inside the banner */
+.banner input {
+  width: 250px; /* Set a fixed width for the input element */
+  padding: 10px; /* Add 10px padding to the input element */
+  margin-right: 10px; /* Add 10px margin to the right of the input element */
+  border: 1px solid #ddd; /* Add a 1px solid light border */
+  border-radius: 5px; /* Apply a 5px border radius (rounded corners) */
+}
+
+/* Styles for button elements inside the banner */
+.banner button {
+  padding: 10px 20px; /* Add 10px vertical and 20px horizontal padding to the button element */
+  cursor: pointer; /* Set the cursor to a pointer (hand) when hovering over the button */
+  background-color: #007bff; /* Blue background color */
+  color: #fff; /* White text color */
+  border: none; /* Remove button border */
+  border-radius: 5px; /* Apply a 5px border radius (rounded corners) */
+}
+
+/* Styles for h2 and p elements inside the banner */
+.banner h2,
+.banner p {
+  margin-bottom: 10px; /* Add 10px margin at the bottom of h2 and p elements */
+  color: #333; /* Dark text color */
+}

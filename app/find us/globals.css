@@ -1,0 +1,47 @@
+@import "bootstrap/dist/css/bootstrap.min.css";
+
+/* globals.css */
+
+.contact-us-page {
+    /* Your existing global styles */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+  }
+  
+  .input-container {
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+  }
+  
+  label {
+    margin-right: 0.5rem;
+  }
+  
+  .button-container {
+    margin-left: 0.5cm; /* Adjust the value to position the button as desired */
+  }
+
+.store-container {
+  max-width: 800px; /* Set a maximum width for the store container */
+  /* Remove margin to align to the left */
+  /* Add additional styling for the store container if needed */
+}
+
+.store-item {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.closing-time {
+  font-style: italic;
+}
+
+.scrollable-area {
+  max-height: 300px;
+  overflow-y: auto;
+}
